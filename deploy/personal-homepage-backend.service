@@ -1,0 +1,15 @@
+[Unit]
+Description=Personal homepage FastAPI backend
+After=network.target
+
+[Service]
+Type=simple
+User=admin
+WorkingDirectory=/home/admin/personal-homepage/backend
+Environment=DATABASE_PATH=/home/admin/personal-homepage/backend/data/content.db
+ExecStart=/home/admin/personal-homepage/backend/.venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8001
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

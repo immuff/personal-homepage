@@ -1,0 +1,17 @@
+[Unit]
+Description=Personal homepage Next.js frontend
+After=network.target personal-homepage-backend.service
+Wants=personal-homepage-backend.service
+
+[Service]
+Type=simple
+User=admin
+WorkingDirectory=/home/admin/personal-homepage/frontend
+Environment=NODE_ENV=production
+Environment=SITE_ORIGIN=http://127.0.0.1:3001
+ExecStart=/usr/bin/node /home/admin/personal-homepage/frontend/node_modules/next/dist/bin/next start -p 3001 -H 127.0.0.1
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
