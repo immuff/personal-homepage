@@ -1,0 +1,62 @@
+{
+  "profile": {
+    "display_name": "小许",
+    "site_name": "小许的书桌",
+    "eyebrow": "一个慢慢生长的个人角落",
+    "headline": "你好，我是小许。",
+    "intro": "把好奇写成文字，把想法做成作品。\n在代码、游戏和日常之间，慢慢探索。",
+    "avatar_url": "/images/personal-avatar.png",
+    "portrait_caption": "认真生活，也认真想象。",
+    "now_title": "最近，在慢慢做这些事",
+    "now_text": "读一点书，写一点代码；把零散的想法整理下来，也为心里的小世界留一点时间。",
+    "now_date": "2026-10-13",
+    "about_title": "在这里，认识一个具体的人。",
+    "about_paragraphs": [
+      "你好，欢迎来到我的书桌边。这里收集学习中的笔记、制作中的小东西，还有偶尔想留下来的日常。",
+      "我喜欢能让人产生好奇的事物：一段写得清楚的文字，一个有意思的游戏机制，或是一个让生活轻松一点的小工具。",
+      "对我而言，学习和创作可以慢一点，但要亲手触摸。把一个想法做出来，再把沿途的疑问和发现写下来，就是这个网站存在的理由。"
+    ],
+    "interests": ["阅读与记录", "游戏与小世界", "技术与创作", "日常观察"],
+    "learning": ["理解前端、后端与数据如何连接", "练习把想法做成可用的小工具", "探索游戏设计和交互叙事"],
+    "experience_note": "真实学习、工作经历尚待补充。这里暂不列出学校、公司、奖项或成果数字。",
+    "contact_note": "联系方式尚待补充。确认后，可以在这里放置邮箱或个人主页。",
+    "contacts": [],
+    "footer_note": "愿好奇常在，愿日子有光。",
+    "is_example": true,
+    "example_note": "昵称、介绍、兴趣与近况为本地预览示例，待替换为本人资料。"
+  },
+  "posts": [
+    {
+      "slug": "a-small-place-on-the-web",
+      "title": "给自己留一小块互联网",
+      "excerpt": "不急着成为一个答案齐全的人。先有一张书桌，放下想法、笔记，和正在做的小东西。",
+      "published_at": "2026-10-13",
+      "tags": ["随笔", "个人网站"],
+      "is_example": true,
+      "content": "> 本文为原创示例文章，用于本地预览，不代表站主的真实经历。\n\n## 为什么想要一个自己的地方\n\n信息流总在向前。一个念头刚出现，很快就被下一个念头盖过去。我想给那些还没长大的想法留一个地方，让它们有机会被慢慢看见。\n\n这里像一张书桌：不需要所有东西都整齐，但每件东西都应该有它的位置。文章放下思考，作品留下尝试，日常则提醒我们，写代码之外还有许多值得认真对待的事。\n\n## 先从很小的事情开始\n\n- 记下今天终于理解的一件事。\n- 展示一个可以亲手操作的小作品。\n- 给没有做完的想法标上「开发中」。\n\n我希望来访的人可以轻松地读完一段文字，找到感兴趣的东西，然后带着一点自己的好奇离开。\n\n![一张属于自己的书桌](/images/project-notebook.svg)\n\n*示例插图：给想法留下一页空白。*\n\n## 允许它慢慢生长\n\n> 做一点，记录一点；理解一点，再向前一点。\n\n网站不会因为上线就完成。它会随着新的阅读、尝试和生活经验改变。也许过一阵子再回来，一页旧笔记旁边已经长出了一件新作品。\n\n如果你也想开始，可以先读读 [Next.js 的入门文档](https://nextjs.org/docs)，然后为自己写下第一段话。\n\n愿我们都能找到合适的节奏。"
+    },
+    {
+      "slug": "from-page-to-database",
+      "title": "从一个页面，到一份真正保存的数据",
+      "excerpt": "页面背后是什么？沿着一次请求，看看 Next.js、FastAPI 与 SQLite 怎样把一段文字送到眼前。",
+      "published_at": "2026-10-10",
+      "tags": ["技术笔记", "全栈", "SQLite"],
+      "is_example": true,
+      "content": "> 本文为原创技术示例文章，日期用于演示排序，不代表真实发表记录。\n\n## 从一次请求说起\n\n打开文章页时，浏览器需要知道有哪些文章。它向当前网站的 `/api/posts` 发起请求，Next.js 把这个请求转给 FastAPI，后者再从 SQLite 中取出记录。\n\n```text\n浏览器 → /api/posts → Next.js rewrites → FastAPI → SQLite\n```\n\n这种连接方式让浏览器始终访问同一个网站地址。页面负责呈现，接口负责读取数据，数据库负责留下记录。\n\n## 读一份真正的数据\n\nPython 自带的 `sqlite3` 就能完成简单查询。搜索词来自访客，所以应当使用参数化查询。\n\n```python\nimport sqlite3\n\nwith sqlite3.connect('content.db') as connection:\n    rows = connection.execute(\n        'SELECT title, excerpt FROM posts WHERE title LIKE ?',\n        ('%SQLite%',),\n    ).fetchall()\n\nfor title, excerpt in rows:\n    print(title, excerpt)\n```\n\n| 一层 | 负责的事情 |\n| --- | --- |\n| 页面 | 把内容展示给访客 |\n| 接口 | 查询并返回文章 |\n| 数据库 | 保存可修改、可保留的记录 |\n\n## 错误也应当被看见\n\n不存在的文章应该返回 **404**。后端暂时不可用时，页面应明确提示读取失败，让访客选择重试。\n\n不能拿预先写好的数组冒充接口成功。否则，看似正常的页面会掩盖真正的连接问题。\n\n下面是一段刻意写得较长的代码，用来检查小屏幕阅读体验。代码区域可以单独横向滚动，正文无需左右移动：\n\n```javascript\nconst response = await fetch('/api/posts?q=' + encodeURIComponent('一段较长的搜索关键词，用来检查代码块在手机屏幕上的横向滚动'), { cache: 'no-store' });\n```\n\n## 再向前一步\n\n可以修改数据库中的文章标题，再刷新页面。若新的标题出现，说明这条链路确实贯通了。\n\n更完整的说明见 [FastAPI 数据库教程](https://fastapi.tiangolo.com/tutorial/sql-databases/) 和 [Next.js rewrites 文档](https://nextjs.org/docs/app/api-reference/config/next-config-js/rewrites)。"
+    },
+    {
+      "slug": "making-a-small-game",
+      "title": "一个小世界，先从一条路开始",
+      "excerpt": "做游戏时，先让一条路值得走。关于场景、节奏和那些可以通过行动发现的故事。",
+      "published_at": "2026-10-06",
+      "tags": ["游戏手记", "创作"],
+      "is_example": true,
+      "content": "> 本文为原创创作示例，不代表已完成或已发布的游戏项目。\n\n## 先想象一条路\n\n不妨从一条山路开始：近处有一盏灯，远处是一扇半开的门。玩家可以移动，可以停下来观察，也可以沿着脚印向前。\n\n一张很小的地图，只要安排得恰当，就能装下一个问题：这里发生过什么？\n\n![示例游戏概念插图](/images/project-game.svg)\n\n*原创概念插图，用于预览作品区；不是实际游戏截图。*\n\n## 让行动替文字说一点话\n\n故事不一定都要通过长对话讲述。一张空椅子、几张散落的纸、一次没有回应的敲门，也能为世界增加重量。\n\n制作时可以先关注三件事：\n\n1. 路能否被看清，人物能否顺畅移动。\n2. 一次探索有没有明确的开始和结束。\n3. 环境里有没有一个值得注意的小细节。\n\n## 留下没有完成的部分\n\n「开发中」也是一种诚实的记录。它告诉来访的人，这件作品还在变化，而不是已经抵达终点。\n\n先让一条路走得通，再考虑更大的地图。先把一个细节表达清楚，再让世界慢慢展开。"
+    }
+  ],
+  "projects": [
+    {"id":"reading-notebook","name":"拾页 · 阅读手记","category":"工具","description":"为读过的文字留一个位置。一个整理摘录、想法与阅读片段的小工具概念。","status":"已完成","image_url":"/images/project-notebook.svg","url":"/blog/a-small-place-on-the-web","link_label":"阅读设计札记","tags":["阅读","个人工具"],"featured":true,"is_example":true,"sort_order":1},
+    {"id":"mountain-game","name":"山行 · 一个小世界","category":"游戏","description":"从一条山路、一盏灯开始，尝试用场景和行动讲述一段简短的故事。","status":"开发中","image_url":"/images/project-game.svg","url":"/blog/making-a-small-game","link_label":"阅读创作手记","tags":["游戏","交互叙事"],"featured":true,"is_example":true,"sort_order":2},
+    {"id":"personal-space","name":"此间 · 个人网站","category":"其他创作","description":"把文章、作品与日常放在一起，练习构建一个温和、清楚、真正保存内容的网站。","status":"已完成","image_url":"/images/project-web.svg","url":"/","link_label":"访问网站首页","tags":["Next.js","FastAPI"],"featured":false,"is_example":true,"sort_order":3}
+  ]
+}
