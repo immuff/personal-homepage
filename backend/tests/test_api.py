@@ -36,14 +36,14 @@ class WebsiteApiTests(unittest.TestCase):
 
     def test_search_matches_title_or_excerpt_and_orders_by_date(self):
         posts = self.client.get("/api/posts").json()
-        self.assertEqual(len(posts), 3)
-        self.assertEqual(posts[0]["slug"], "a-small-place-on-the-web")
+        self.assertEqual(len(posts), 4)
+        self.assertEqual(posts[0]["slug"], "kafka-from-backlog")
         self.assertNotIn("content", posts[0])
         for term, slug in [("SQLite", "from-page-to-database"), ("小世界", "making-a-small-game")]:
             with self.subTest(term=term):
                 result = self.client.get("/api/posts", params={"q": term})
                 self.assertEqual([p["slug"] for p in result.json()], [slug])
-        self.assertEqual(len(self.client.get("/api/posts", params={"q": "   "}).json()), 3)
+        self.assertEqual(len(self.client.get("/api/posts", params={"q": "   "}).json()), 4)
 
     def test_user_search_is_literal_and_parameterized(self):
         for term in ["%", "_", "' OR 1=1 --", "无此关键词"]:
@@ -60,6 +60,19 @@ class WebsiteApiTests(unittest.TestCase):
         self.assertEqual(missing.status_code, 404)
         self.assertEqual(missing.json()["detail"], "文章不存在")
 
+    def test_kafka_article_is_a_real_post_and_searchable(self):
+        response = self.client.get("/api/posts/kafka-from-backlog")
+        self.assertEqual(response.status_code, 200)
+        post = response.json()
+        self.assertEqual(post["title"], "从消息积压开始，理解 Kafka")
+        self.assertFalse(post["is_example"])
+        self.assertIn("## 1. 消息积压，为什么需要队列", post["content"])
+        self.assertIn("ZooKeeper", post["content"])
+        self.assertIn("KRaft", post["content"])
+        self.assertIn("https://kafka.apache.org/", post["content"])
+        result = self.client.get("/api/posts", params={"q": "Kafka"}).json()
+        self.assertEqual([item["slug"] for item in result], ["kafka-from-backlog"])
+
     def test_database_changes_survive_initialization_and_new_client(self):
         with closing(sqlite3.connect(self.path)) as db, db:
             db.execute("UPDATE posts SET title = ? WHERE slug = ?", ("修改后的文章", "a-small-place-on-the-web"))
@@ -68,7 +81,7 @@ class WebsiteApiTests(unittest.TestCase):
             db.execute("UPDATE profile SET data = ? WHERE id = 1", (json.dumps(profile, ensure_ascii=False),))
         initialize(self.path)
         with TestClient(app) as restarted:
-            self.assertEqual(restarted.get("/api/posts").json()[0]["title"], "修改后的文章")
+            self.assertEqual(restarted.get("/api/posts/a-small-place-on-the-web").json()["title"], "修改后的文章")
             self.assertEqual(restarted.get("/api/profile").json()["display_name"], "数据库中的新名字")
 
 

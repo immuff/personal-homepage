@@ -13,6 +13,8 @@
 - [部署、更新与日志查看](docs/deployment.md)
 - [本次公网验收](docs/public-verification.md)
 
+已发布学习笔记：[从消息积压开始，理解 Kafka](http://8.134.172.39/blog/kafka-from-backlog)。由站主提供的 Word 原稿整理，作为正式文章保存；个人资料与其他示例内容仍保留原有标记。
+
 ## 当前可访问地址
 
 已在本机后台启动生产前端和 FastAPI：
@@ -39,7 +41,7 @@ personal-homepage/
 │   ├── .venv/              # 本项目独立虚拟环境
 │   ├── main.py             # 只读 FastAPI 接口
 │   ├── schema.sql          # SQLite 表结构
-│   ├── seed.json           # 明确标注的初始示例资料、文章和项目
+│   ├── seed.json           # 初始内容；示例资料与真实文章分别标记
 │   ├── init_db.py          # 初始化表与缺失记录，保留已有修改
 │   ├── requirements.txt    # 仅 FastAPI、Uvicorn 两项直接运行依赖
 │   ├── requirements-dev.txt# 额外的接口测试依赖
@@ -70,7 +72,7 @@ $projectPython = 'C:\Users\许楚烽\.cache\codex-runtimes\codex-primary-runtime
 .\.venv\Scripts\python.exe init_db.py
 ```
 
-`init_db.py` 会创建 `backend/data/content.db`，插入 1 条示例个人资料、3 篇示例文章和 3 个示例作品。重复执行只补充缺失记录，不覆盖数据库中已有内容。服务启动不会自动初始化或重置数据库。
+`init_db.py` 会创建 `backend/data/content.db`，插入 1 条示例个人资料、3 篇示例文章、1 篇真实 Kafka 学习笔记和 3 个示例作品。重复执行只补充缺失记录，不覆盖数据库中已有内容。服务启动不会自动初始化或重置数据库。
 
 ## 启动：两个 PowerShell 窗口
 
