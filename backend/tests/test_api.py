@@ -36,14 +36,14 @@ class WebsiteApiTests(unittest.TestCase):
 
     def test_search_matches_title_or_excerpt_and_orders_by_date(self):
         posts = self.client.get("/api/posts").json()
-        self.assertEqual(len(posts), 4)
-        self.assertEqual(posts[0]["slug"], "kafka-from-backlog")
+        self.assertEqual(len(posts), 5)
+        self.assertEqual(posts[0]["slug"], "when-you-feel-unimportant")
         self.assertNotIn("content", posts[0])
         for term, slug in [("SQLite", "from-page-to-database"), ("小世界", "making-a-small-game")]:
             with self.subTest(term=term):
                 result = self.client.get("/api/posts", params={"q": term})
                 self.assertEqual([p["slug"] for p in result.json()], [slug])
-        self.assertEqual(len(self.client.get("/api/posts", params={"q": "   "}).json()), 4)
+        self.assertEqual(len(self.client.get("/api/posts", params={"q": "   "}).json()), 5)
 
     def test_user_search_is_literal_and_parameterized(self):
         for term in ["%", "_", "' OR 1=1 --", "无此关键词"]:
@@ -72,6 +72,17 @@ class WebsiteApiTests(unittest.TestCase):
         self.assertIn("https://kafka.apache.org/", post["content"])
         result = self.client.get("/api/posts", params={"q": "Kafka"}).json()
         self.assertEqual([item["slug"] for item in result], ["kafka-from-backlog"])
+
+    def test_author_essay_is_real_and_searchable(self):
+        response = self.client.get("/api/posts/when-you-feel-unimportant")
+        self.assertEqual(response.status_code, 200)
+        essay = response.json()
+        self.assertFalse(essay["is_example"])
+        self.assertIn("随笔", essay["tags"])
+        self.assertIn("森林里的一棵树", essay["content"])
+        self.assertIn("保护自己的边界", essay["content"])
+        result = self.client.get("/api/posts", params={"q": "不重要"}).json()
+        self.assertEqual([item["slug"] for item in result], ["when-you-feel-unimportant"])
 
     def test_database_changes_survive_initialization_and_new_client(self):
         with closing(sqlite3.connect(self.path)) as db, db:

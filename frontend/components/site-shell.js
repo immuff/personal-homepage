@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useProfile } from './site-context';
 
-const navigation = [['/', '首页'], ['/blog', '文章'], ['/projects', '作品'], ['/about', '关于']];
+const navigation = [['/', '首页'], ['/blog', '文章'], ['/essays', '随笔'], ['/projects', '作品'], ['/about', '关于']];
 
 export function Header() {
   const profile = useProfile();

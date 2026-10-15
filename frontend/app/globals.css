@@ -126,9 +126,9 @@ main { min-height: 65vh; }
 .search-form button { flex-shrink: 0; }
 .search-summary { min-height: 57px; color: #73806b; font-size: 13px; padding-top: 20px; }
 .category-tabs { display: flex; gap: 10px; margin-bottom: 29px; }
-.category-tabs button { padding: 6px 18px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: var(--muted); font-size: 15px; }
-.category-tabs button[aria-pressed='true'] { background: #e5ece0; color: var(--green); border-color: #d0dccb; }
-.category-tabs button:hover { color: var(--green); }
+.category-tabs button, .category-tabs a { padding: 6px 18px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: var(--muted); font-size: 15px; }
+.category-tabs button[aria-pressed='true'], .category-tabs a[aria-current='page'] { background: #e5ece0; color: var(--green); border-color: #d0dccb; }
+.category-tabs button:hover, .category-tabs a:hover { color: var(--green); }
 
 .article-container { width: min(720px, calc(100% - 80px)); margin: 55px auto 0; }
 .back-link { font-size: 14px; }
@@ -241,7 +241,7 @@ main { min-height: 65vh; }
 @media (max-width: 560px) {
   .header-inner { width: calc(100% - 32px); flex-wrap: wrap; justify-content: center; padding-top: 17px; gap: 0; }
   .site-brand { font-size: 19px; }
-  .site-header nav { width: 100%; justify-content: center; gap: 36px; }
+  .site-header nav { width: 100%; justify-content: center; gap: clamp(18px, 5vw, 36px); }
   .site-header nav a { padding: 14px 0 18px; }
   .site-header nav a[aria-current]::after { bottom: 8px; }
   .hero { padding-top: 39px; }
@@ -275,7 +275,7 @@ main { min-height: 65vh; }
   .search-form input { font-size: 14px; }
   .search-form .button { padding-inline: 13px; gap: 8px; font-size: 14px; }
   .category-tabs { gap: 5px; }
-  .category-tabs button { padding: 6px 14px; font-size: 14px; }
+  .category-tabs button, .category-tabs a { padding: 6px 14px; font-size: 14px; }
   .article-heading h1 { font-size: 30px; }
   .prose pre { font-size: 13px; padding: 18px; }
   .prose blockquote { padding: 12px 16px; font-size: 15px; }
