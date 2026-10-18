@@ -17,6 +17,8 @@
 
 已发布随笔：[当自己不重要时，要悄悄离场吗？](http://8.134.172.39/blog/when-you-feel-unimportant)，收录于[随笔栏目](http://8.134.172.39/essays)。Word 原稿保留在本机，排版稿保存在 `content/essays/`；仅整理段落、标点与明显错字，移除两处未确认的引文提示。发布日期为本次网页发布日，不代表原稿写作日期。
 
+已发布系列首篇：[Agent 与 RAG（一）：从提示词工程开始](http://8.134.172.39/blog/agent-rag-01-prompt-engineering)。整理稿位于 `content/agent-rag/01-prompt-engineering.md`，保留原 Word 文档；三张表和提示词模板已转成 Markdown。系列沿用「Agent 与 RAG」标题前缀及「Agent 与 RAG 系列」标签，[系列入口](http://8.134.172.39/blog?q=Agent%20%E4%B8%8E%20RAG)复用现有文章搜索。提示词压缩与裁剪仍为后续待展开问题。
+
 ## 当前可访问地址
 
 已在本机后台启动生产前端和 FastAPI：
@@ -75,7 +77,7 @@ $projectPython = 'C:\Users\许楚烽\.cache\codex-runtimes\codex-primary-runtime
 .\.venv\Scripts\python.exe init_db.py
 ```
 
-`init_db.py` 会创建 `backend/data/content.db`，插入 1 条示例个人资料、3 篇示例文章、1 篇真实 Kafka 学习笔记、1 篇真实随笔和 3 个示例作品。重复执行只补充缺失记录，不覆盖数据库中已有内容。服务启动不会自动初始化或重置数据库。
+`init_db.py` 会创建 `backend/data/content.db`，插入 1 条示例个人资料、3 篇示例文章、1 篇真实 Kafka 学习笔记、1 篇真实随笔、1 篇 Agent 与 RAG 系列笔记和 3 个示例作品。重复执行只补充缺失记录，不覆盖数据库中已有内容。服务启动不会自动初始化或重置数据库。
 
 ## 启动：两个 PowerShell 窗口
 
