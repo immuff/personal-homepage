@@ -75,7 +75,23 @@
 
 本机已备份数据库，仅新增本篇，其他文章、资料和作品记录保持不变。现有 7 项后端测试、3 项前端测试以及 Next.js 生产构建通过。通过 3001 正式服务检查：文章与初始化记录一致；LangGraph 搜索返回本篇，系列搜索返回两篇；7 张图片均返回 200 且文件哈希一致。正式阅读页在 1280×900 与 390×844 下无整页横向溢出，长代码独立滚动，配图加载和原图点击正常。
 
-公网部署与验收结果在完成后补充。
+## 公网发布与验收（2026-10-20）
+
+内容提交 `d7137e8` 已同步 GitHub 和 `/home/admin/personal-homepage`。服务器生产构建成功，前端已重新加载，前后端服务均处于 active 状态。7 张配图先部署并从公网验证可用，随后备份生产数据库并仅新增本篇。
+
+- 生产数据库备份：`/home/admin/personal-homepage/.runtime/content-before-langgraph-20261020-162807.db`。
+- 本地数据库备份：`.runtime/content-before-langgraph-20261020-162242.db`。
+- 数据库写入前后逐行比较：原有文章、个人资料与作品记录未变化；重新打开数据库后正文仍在。
+- 公网 API 中的整条文章记录与审核稿生成的初始化记录一致，`is_example=false`；列表共 7 篇，本篇按日期排在首位。
+- `q=LangGraph` 返回本篇，`q=Agent 与 RAG` 返回系列两篇，`q=Kafka` 仍仅返回原 Kafka 文章。
+- 正文返回 200，渲染 7 张配图、9 个二级标题和 4 个代码块；7 张公网图片均返回 200，字节哈希与审核图一致。
+- 首页、文章列表、作品、关于和先前的三篇正式文章均返回 200；不存在的文章返回 404。
+- 公网浏览器确认正文标题、日期、来源和全文结构正常；首页「最近写下的」首项为本篇，指向正式文章地址。
+- 公网截图记录 1280×900 桌面和 390×844 手机宽度的阅读效果；浏览器尺寸覆盖已恢复。代码滚动与全部配图的布局细节已在相同版本的本机正式网站检查。
+
+本机验收材料位于 `.runtime/langgraph-local-http-check.json`、`.runtime/langgraph-public-http-check.json`、`.runtime/langgraph-publication-production-write.json`、`.runtime/langgraph-remote-deploy.log` 及 `.runtime/langgraph-public-desktop.png`、`.runtime/langgraph-public-mobile.png`；这些运行材料不提交到 Git。
+
+本次没有进行手机真机测试、真实模型端到端实验或公网压力测试。
 
 ## 来源核对范围
 
