@@ -36,14 +36,14 @@ class WebsiteApiTests(unittest.TestCase):
 
     def test_search_matches_title_or_excerpt_and_orders_by_date(self):
         posts = self.client.get("/api/posts").json()
-        self.assertEqual(len(posts), 7)
-        self.assertEqual(posts[0]["slug"], "agent-rag-02-langgraph-multi-agent")
+        self.assertEqual(len(posts), 8)
+        self.assertEqual(posts[0]["slug"], "agent-rag-03-retrieval-design")
         self.assertNotIn("content", posts[0])
         for term, slug in [("SQLite", "from-page-to-database"), ("小世界", "making-a-small-game")]:
             with self.subTest(term=term):
                 result = self.client.get("/api/posts", params={"q": term})
                 self.assertEqual([p["slug"] for p in result.json()], [slug])
-        self.assertEqual(len(self.client.get("/api/posts", params={"q": "   "}).json()), 7)
+        self.assertEqual(len(self.client.get("/api/posts", params={"q": "   "}).json()), 8)
 
     def test_user_search_is_literal_and_parameterized(self):
         for term in ["%", "_", "' OR 1=1 --", "无此关键词"]:

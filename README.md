@@ -21,6 +21,8 @@
 
 已发布系列第二篇：[Agent 与 RAG（二）：用 LangGraph 理解多智能体协作](http://8.134.172.39/blog/agent-rag-02-langgraph-multi-agent)。沿用审核通过的正文，保留来源署名及 7 张原文配图；三个 Python 示例已在独立环境验证编排行为。整理稿和图片保存在 `content/agent-rag/`，编辑说明及发布记录见 [审核说明](docs/reviews/agent-rag-02-langgraph-multi-agent.md)。
 
+已整理系列第三篇：[Agent 与 RAG（三）：从“RAG 已死”到检索方案选型](http://8.134.172.39/blog/agent-rag-03-retrieval-design)。正文位于 `content/agent-rag/03-rag-retrieval-design.md`，审校与发布状态见 [编辑记录](docs/reviews/agent-rag-03-retrieval-design.md)。服务器更新源码后，可运行 `backend/.venv/bin/python deploy/publish_rag_article.py` 单独发布本篇；脚本先备份数据库，保留其他内容，重复执行同稿不新增记录。公网发布仍待实际执行及验收。
+
 ## 当前可访问地址
 
 已在本机后台启动生产前端和 FastAPI：
